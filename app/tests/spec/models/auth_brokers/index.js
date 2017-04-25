@@ -60,9 +60,14 @@ define((require, exports, module) => {
       assert.equal(authBroker, require('models/auth_brokers/oauth-redirect'));
     });
 
-    it('get falls back to the base auth broker', () => {
+    it('get returns correct broker for web context', () => {
+      const authBroker = index.get(constants.CONTENT_SERVER_CONTEXT);
+      assert.equal(authBroker, require('models/auth_brokers/web'));
+    });
+
+    it('get falls back to the web auth broker', () => {
       const authBroker = index.get('wibble');
-      assert.equal(authBroker, require('models/auth_brokers/base'));
+      assert.equal(authBroker, require('models/auth_brokers/web'));
     });
   });
 });
