@@ -15,25 +15,22 @@ define(function (require, exports, module) {
       broker = new WebBroker({});
     });
 
-    describe('afterSignInConfirmationPoll', () => {
-      it('returns a NavigateBehavior to settings', () => {
-        return broker.afterSignInConfirmationPoll({})
-          .then((behavior) => {
-            assert.equal(behavior.type, 'navigate');
-            assert.equal(behavior.endpoint, 'settings');
-          });
+    function testRedirectsToSettings(brokerMethod) {
+      describe(brokerMethod, () => {
+        it('returns a NavigateBehavior to settings', () => {
+          return broker[brokerMethod]({ get: () => {} })
+            .then((behavior) => {
+              assert.equal(behavior.type, 'navigate');
+              assert.equal(behavior.endpoint, 'settings');
+            });
+        });
       });
-    });
+    }
 
-    describe('afterSignUpConfirmationPoll', () => {
-      it('returns a NavigateBehavior to settings', () => {
-        return broker.afterSignUpConfirmationPoll({})
-          .then((behavior) => {
-            assert.equal(behavior.type, 'navigate');
-            assert.equal(behavior.endpoint, 'settings');
-          });
-      });
-    });
+    testRedirectsToSettings('afterCompleteResetPassword');
+    testRedirectsToSettings('afterResetPasswordConfirmationPoll');
+    testRedirectsToSettings('afterSignInConfirmationPoll');
+    testRedirectsToSettings('afterSignUpConfirmationPoll');
   });
 });
 

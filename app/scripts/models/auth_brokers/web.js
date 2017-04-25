@@ -24,6 +24,8 @@ define(function (require, exports, module) {
 
   module.exports = BaseBroker.extend({
     defaultBehaviors: _.extend({}, proto.defaultBehaviors, {
+      afterCompleteResetPassword: redirectToSettingsBehavior,
+      afterResetPasswordConfirmationPoll: redirectToSettingsBehavior,
       afterSignInConfirmationPoll: redirectToSettingsBehavior,
       afterSignUpConfirmationPoll: redirectToSettingsBehavior
     }),
